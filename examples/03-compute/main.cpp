@@ -38,7 +38,7 @@ int main()
         for (int i = 0; i < n; i++)
             host[i] = i;
         auto e = gfxCommandCopyBuffer(gfx, src, staging);
-        e = gfxFrame(gfx);
+//        e = gfxFinish(gfx);//safe to remove as gfx take care of the dependency
         e = gfxDestroyBuffer(gfx, staging);
     }
     GfxResult e = kGfxResult_NoError;
@@ -52,7 +52,7 @@ int main()
         e = gfxProgramSetBuffer(gfx, program, "OutputBuffer", dst);
         e = gfxCommandDispatch(gfx, 1, 1, 1);
         e = gfxCommandCopyBuffer(gfx, dstHostAccess, dst);
-        e = gfxFrame(gfx);
+        e = gfxFinish(gfx);
         int* host = gfxBufferGetData<int>(gfx, dstHostAccess);
         bool success = true;
         for (int i = 0; i < n; i++)
